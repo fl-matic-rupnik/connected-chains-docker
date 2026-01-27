@@ -1,7 +1,7 @@
 name: Release rippled image
 on:
   push:
-    branches: [main]
+    branches: [main, "mr/optimization"]
     tags: ["*"]
     paths: ["images/rippled/**"]
   pull_request:
