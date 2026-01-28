@@ -100,10 +100,12 @@ jobs:
           TAGS: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: |
-          echo "${TAGS}" | xargs -I {} cosign verify \
-            --certificate-identity="https://github.com/${{ github.repository }}/.github/workflows/release-image.yml@${{ github.ref }}" \
-            --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
-            {}@${DIGEST}
+          echo "${TAGS}" | while read -r tag; do
+            cosign verify \
+              --certificate-identity="https://github.com/${{ github.repository }}/.github/workflows/release-image.yml@${{ github.ref }}" \
+              --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+              "${tag}@${DIGEST}"
+          done
 
       # - name: Sign the published Docker image
       #   if: ${{ github.event_name != 'pull_request' }}
