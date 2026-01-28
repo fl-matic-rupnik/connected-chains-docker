@@ -91,7 +91,7 @@ jobs:
           TAGS: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: |
-          echo "${TAGS}" | xargs -n1 -I {} cosign sign --yes --certificate-expiry 8760h {}@${DIGEST}
+          echo "${TAGS}" | xargs -n1 -I {} cosign sign --yes {}@${DIGEST}
 
       - name: Verify signatures
         if: ${{ github.event_name != 'pull_request' }}
@@ -104,6 +104,24 @@ jobs:
             --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
             {}@${DIGEST}
 
+      # - name: Sign the published Docker image
+      #   if: ${{ github.event_name != 'pull_request' }}
+      #   env:
+      #     TAGS: ${{ steps.meta.outputs.tags }}
+      #     DIGEST: ${{ steps.build-and-push.outputs.digest }}
+      #   run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+      # - name: Verify ghcr image signatures
+      #   if: ${{ github.event_name != 'pull_request' }}
+      #   shell: bash
+      #   env:
+      #     COSIGN_EXPERIMENTAL: 1
+      #     TAGS: ${{ steps.meta.outputs.tags }}
+      #     DIGEST: ${{ steps.build-and-push.outputs.digest }}
+      #   run: |
+      #     echo "${TAGS}" | xargs -I {} cosign verify \
+      #     --certificate-identity=https://github.com/${{ github.repository }}/.github/workflows/release-dogecoind.yml@${{ github.ref }} \
+      #     --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
+      #     "{}@${DIGEST}"
   generate-provenance:
     needs: [build]
     if: ${{ github.event_name != 'pull_request' }}
