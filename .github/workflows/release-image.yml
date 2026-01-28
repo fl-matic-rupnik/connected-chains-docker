@@ -100,7 +100,7 @@ jobs:
           TAGS: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: |
-          echo "${TAGS}" | xargs -n1 -I {} cosign verify \
+          echo "${TAGS}" | xargs -I {} cosign verify \
             --certificate-identity=https://github.com/${{ github.repository }}/.github/workflows/release-image.yml@${{ github.ref }} \ 
             --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
             {}@${DIGEST}
