@@ -5,7 +5,6 @@ ARG VERSION=v1.14.9
 
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
 
-
 RUN <<-EOF
     set -e
     apt-get -y update && apt-get -y install \
