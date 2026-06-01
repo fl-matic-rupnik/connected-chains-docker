@@ -8,7 +8,13 @@ on:
     paths: ["images/bitcoind/**"]
 
 # Declare default permissions as read only.
-permissions: read-all
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+  attestations: write
+  actions: read
+  security-events: read
 
 jobs:
   call:
