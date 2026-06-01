@@ -1,14 +1,20 @@
 name: Release dogecoind image
 on:
   push:
-    branches: [main]
+    branches: [main, feat/builder-image-adjustment]
     paths: ["images/dogecoind/**"]
   pull_request:
     branches: [main]
     paths: ["images/dogecoind/**"]
 
 # Declare default permissions as read only.
-permissions: read-all
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+  attestations: write
+  actions: read
+  security-events: read
 
 jobs:
   call:
