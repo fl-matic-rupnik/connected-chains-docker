@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.3-labs
-FROM debian:12@sha256:b6507e340c43553136f5078284c8c68d86ec8262b1724dde73c325e8d3dcdeba as build
+FROM debian:trixie@sha256:4ae67669760b807c19f23902a3fd7c121a6a70cf2ae709035674b23e712e4d62 as build
 
 ARG VERSION=v1.14.9
 
@@ -42,7 +42,7 @@ RUN <<-EOF
     mkdir -p /opt/dogecoin/.dogecoin/db
 EOF
 
-FROM gcr.io/distroless/cc-debian13:nonroot@sha256:4cf9e68a5cbd8c9623480b41d5ed6052f028c44cc29f91b21590613ab8bec824 as final
+FROM gcr.io/distroless/cc-debian13:nonroot@sha256:e1fd250ce83d94603e9887ec991156a6c26905a6b0001039b7a43699018c0733 as final
 
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
 
