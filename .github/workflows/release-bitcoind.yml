@@ -1,20 +1,14 @@
 name: Release bitcoind image
 on:
   push:
-    branches: [main, feat/builder-image-adjustment]
+    branches: [main]
     paths: ["images/bitcoind/**"]
   pull_request:
     branches: [main]
     paths: ["images/bitcoind/**"]
 
 # Declare default permissions as read only.
-permissions:
-  contents: read
-  packages: write
-  id-token: write
-  attestations: write
-  actions: read
-  security-events: read
+permissions: read-all
 
 jobs:
   call:

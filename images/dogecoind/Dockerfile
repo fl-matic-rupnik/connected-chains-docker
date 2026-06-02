@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1.3-labs
-# test trigger
 # Build stage stays on debian:12 — dogecoin v1.14.9 depends/ hardcodes Boost 1.63.0 which
 # fails to bootstrap with GCC 13 (trixie). Needs upstream fix in dogecoin/depends/packages/boost.mk.
 FROM debian:12@sha256:b6507e340c43553136f5078284c8c68d86ec8262b1724dde73c325e8d3dcdeba as build
