@@ -16,7 +16,7 @@ RUN <<-EOF
     pkg-config \
     libdb++-dev \
     curl \
-    cmake 
+    cmake
 EOF
 
 RUN git clone --single-branch --branch "${VERSION}" https://github.com/litecoin-project/litecoin.git /opt/litecoin
