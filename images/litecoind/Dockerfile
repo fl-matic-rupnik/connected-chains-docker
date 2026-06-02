@@ -1,7 +1,4 @@
 # syntax=docker/dockerfile:1.3-labs
-# test trigger
-# Build stage stays on debian:12 — litecoin v0.21.4 depends/ hardcodes Boost 1.63.0 which
-# fails to bootstrap with GCC 13 (trixie). Needs upstream fix in litecoin-project/depends/packages/boost.mk.
 FROM debian:12@sha256:b6507e340c43553136f5078284c8c68d86ec8262b1724dde73c325e8d3dcdeba as build
 
 ARG VERSION=v0.21.4
@@ -17,6 +14,7 @@ RUN <<-EOF
     build-essential \
     libtool \
     pkg-config \
+    libdb++-dev \
     curl \
     cmake
 EOF
@@ -50,7 +48,7 @@ EOF
 COPY litecoin.conf /opt/litecoin/.litecoin/litecoin.conf
 RUN mkdir -p /opt/litecoin/.litecoin/db
 
-FROM gcr.io/distroless/cc-debian13:nonroot@sha256:e1fd250ce83d94603e9887ec991156a6c26905a6b0001039b7a43699018c0733 as final
+FROM gcr.io/distroless/cc-debian12:nonroot@sha256:d1b8e4c52be1111aa108e959ef2a822299bb70fd1819dd250871a2601ca1e4b6 as final
 
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
 
