@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1.3-labs
 # test trigger
-FROM debian:trixie@sha256:4ae67669760b807c19f23902a3fd7c121a6a70cf2ae709035674b23e712e4d62 as build
+# Build stage stays on debian:12 — litecoin v0.21.4 depends/ hardcodes Boost 1.63.0 which
+# fails to bootstrap with GCC 13 (trixie). Needs upstream fix in litecoin-project/depends/packages/boost.mk.
+FROM debian:12@sha256:b6507e340c43553136f5078284c8c68d86ec8262b1724dde73c325e8d3dcdeba as build
 
 ARG VERSION=v0.21.4
 
