@@ -1,4 +1,4 @@
-FROM debian:trixie-slim@sha256:a99cfc517144bc59b1978475ec53b46ecabec7e43635402ee5b77cc54cd1b20a as build
+FROM debian:trixie-slim@sha256:a99cfc517144bc59b1978475ec53b46ecabec7e43635402ee5b77cc54cd1b20a AS build
 
 ARG VERSION=3.4.1
 ARG DEB_REVISION=1
@@ -24,7 +24,7 @@ RUN mkdir -p /opt/xrpld/bin /opt/xrpld/.xrpld/db \
 
 COPY xrpld.cfg validators.txt /opt/xrpld/.xrpld/
 
-FROM gcr.io/distroless/base-debian13:nonroot@sha256:ab7554b6d07ad354fad31957f8a1a813e65dfb93a8ad160568c79c3f2be6884f as final
+FROM gcr.io/distroless/base-debian13:nonroot@sha256:ab7554b6d07ad354fad31957f8a1a813e65dfb93a8ad160568c79c3f2be6884f AS final
 
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
 
