@@ -11,31 +11,6 @@ on:
 permissions: read-all
 
 jobs:
-  source:
-    uses: ./.github/workflows/release-image.yml # zizmor: ignore[self-repository] actionlint does not support $/ syntax
-    permissions:
-      actions: read
-      checks: read
-      contents: read
-      deployments: read
-      discussions: read
-      issues: read
-      models: read
-      pages: read
-      pull-requests: read
-      repository-projects: read
-      statuses: read
-      security-events: read
-      artifact-metadata: read
-      packages: write
-      id-token: write
-      attestations: write
-    with:
-      image: ghcr.io/${{ github.repository }}/xrpl
-      context: images/xrpl
-      dockerfile: Dockerfile
-    secrets:
-      registry-password: ${{ secrets.GITHUB_TOKEN }}
   deb:
     uses: ./.github/workflows/release-image.yml # zizmor: ignore[self-repository] actionlint does not support $/ syntax
     permissions:
@@ -58,6 +33,6 @@ jobs:
     with:
       image: ghcr.io/${{ github.repository }}/xrpl-deb
       context: images/xrpl
-      dockerfile: Dockerfile-deb
+      dockerfile: Dockerfile
     secrets:
       registry-password: ${{ secrets.GITHUB_TOKEN }}

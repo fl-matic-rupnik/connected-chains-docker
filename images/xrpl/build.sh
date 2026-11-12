@@ -1,1 +1,1 @@
-docker build -t flarefoundation/xrpl:3.2.0-dless .
+docker build -t ghcr.io/flare-foundation/connected-chains-docker/xrpl-deb:local .

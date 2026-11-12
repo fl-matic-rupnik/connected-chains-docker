@@ -40,7 +40,7 @@ services:
 
   xrpl:
     container_name: xrpl
-    image: flarefoundation/xrpl:3.2.0-dless
+    image: ghcr.io/flare-foundation/connected-chains-docker/xrpl-deb:3.4.1@sha256:02d9a1f6cc364b9b022beafbfff0cc65126e589c017e00e6dbdb39167640f3ea
     restart: on-failure:3
     environment:
       - TZ=Europe/London
