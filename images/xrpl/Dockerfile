@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1.3-labs
 FROM debian:trixie-slim@sha256:a99cfc517144bc59b1978475ec53b46ecabec7e43635402ee5b77cc54cd1b20a as build
 
 ARG VERSION=3.4.1
@@ -7,30 +6,21 @@ ARG XRPLD_DEB_SHA256=cae8ce3b9bc9451b19975c890714ba789d2004987cdfff9cbd55522c612
 
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
 
-RUN <<-EOF
-    set -e
-    apt-get -y update && apt-get -y install --no-install-recommends \
+RUN apt-get -y update && apt-get -y install --no-install-recommends \
         ca-certificates \
-        curl
-    rm -rf /var/lib/apt/lists/*
-EOF
+        curl \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp/xrpld
 
 # https://packages.xrplf.org - DEB/RPM packages are signed with an XRPLF key,
 # see https://xrpl.org/docs/infrastructure/installation/install-rippled-on-ubuntu
-RUN <<-EOF
-    set -e
-    curl -fsSL -o xrpld.deb "https://packages.xrplf.org/repository/deb-stable/pool/x/xrpld/xrpld_${VERSION}-${DEB_REVISION}_amd64.deb"
-    echo "${XRPLD_DEB_SHA256}  xrpld.deb" | sha256sum -c -
-    dpkg-deb -x xrpld.deb /tmp/xrpld/extracted
-EOF
+RUN curl -fsSL -o xrpld.deb "https://packages.xrplf.org/repository/deb-stable/pool/x/xrpld/xrpld_${VERSION}-${DEB_REVISION}_amd64.deb" \
+    && echo "${XRPLD_DEB_SHA256}  xrpld.deb" | sha256sum -c - \
+    && dpkg-deb -x xrpld.deb /tmp/xrpld/extracted
 
-RUN <<-EOF
-    set -e
-    mkdir -p /opt/xrpld/bin /opt/xrpld/.xrpld/db
-    cp /tmp/xrpld/extracted/usr/bin/xrpld /tmp/xrpld/extracted/usr/bin/validator-keys /opt/xrpld/bin/
-EOF
+RUN mkdir -p /opt/xrpld/bin /opt/xrpld/.xrpld/db \
+    && cp /tmp/xrpld/extracted/usr/bin/xrpld /tmp/xrpld/extracted/usr/bin/validator-keys /opt/xrpld/bin/
 
 COPY xrpld.cfg validators.txt /opt/xrpld/.xrpld/
 
